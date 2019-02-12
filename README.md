@@ -1,6 +1,7 @@
 # Special_Duino_LCD_i2c_demo
-## Video
+## Video and Photos
 https://www.youtube.com/watch?v=f47Uz1C97Uw
+https://photos.app.goo.gl/UyCcSdYZttxR5bMNA
 
 ## Credit
 is inside the .ino file.
