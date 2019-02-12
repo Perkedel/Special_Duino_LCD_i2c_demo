@@ -5,7 +5,8 @@
 /*  http://bit.ly/DuinoLCDi2cPerkedel
  *   GNU GPL v3
  *   various libraries and copy from examples from library applied
- *   Video Demo: https://www.youtube.com/watch?v=f47Uz1C97Uw
+ *   Video Demo: https://www.youtube.com/watch?v=f47Uz1C97Uw ; https://www.cocoscope.com/watch?v=12095
+ *   Google Photo https://photos.app.goo.gl/UyCcSdYZttxR5bMNA
  *   
  *   https://www.arduino.cc/en/Reference/Wire
  *   Unit = Arduino Pin (Connect to)
@@ -29,8 +30,11 @@
     https://maxpromer.github.io/LCD-Character-Creator/
     https://omerk.github.io/lcdchargen/
 
+    google translate! https://translate.google.com
+
     other refferencing:
     https://github.com/mathertel/LiquidCrystal_PCF8574
+    https://forum.arduino.cc/index.php?topic=407904.0
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
