@@ -1,7 +1,12 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-/*  https://www.arduino.cc/en/Reference/Wire
+/*  http://bit.ly/DuinoLCDi2cPerkedel
+ *   GNU GPL v3
+ *   various libraries and copy from examples from library applied
+ *   Video Demo: https://www.youtube.com/watch?v=f47Uz1C97Uw
+ *   
+ *   https://www.arduino.cc/en/Reference/Wire
  *   Unit = Arduino Pin (Connect to)
  *  Uno, Ethernet = A4 (SDA), A5 (SCL)
     Mega2560 = 20 (SDA), 21 (SCL)
@@ -10,10 +15,14 @@
 
     All = 5V (VCC), GND (GND)
 
+    http://forum.arduino.cc/index.php?topic=19002.0
+
     https://synapse.kyoto/lib/KanaLiquidCrystal/page001.html
     https://synapse.kyoto/lib/MGLCD/CharacterCode/page001.html
 
     https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+
+    buy i2c pack for LCD : https://shopee.co.id/simpleh.id/651372108
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
