@@ -47,6 +47,7 @@
 
     https://www.arduino.cc/en/tutorial/memory RAM is running out cause trouble!
     https://www.arduino.cc/reference/en/language/variables/utilities/progmem/ PROGMEM things
+    https://learn.adafruit.com/memories-of-an-arduino/optimizing-sram adafruit tips of memory
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -143,6 +144,28 @@ byte Happ[8] = {
   0b01110
 };
 
+byte Osurprise[8] = {
+  0b01110,
+  0b10001,
+  0b11011,
+  0b11011,
+  0b10001,
+  0b10101,
+  0b10001,
+  0b01110
+};
+
+byte LineMouthFace[8] = {
+  0b01110,
+  0b10001,
+  0b11011,
+  0b11011,
+  0b10001,
+  0b11111,
+  0b10001,
+  0b01110
+};
+
 byte ExclamBox[8] = {
   0b11111,
   0b10001,
@@ -163,6 +186,9 @@ void setup() {
   lcd.createChar(1,PerkedelLogo);
   lcd.createChar(2,Sadd);
   lcd.createChar(3,ExclamBox);
+  lcd.createChar(4,Happ);
+  lcd.createChar(5,Osurprise);
+  lcd.createChar(6,LineMouthFace);
   lcd.backlight();
   lcd.setCursor(0,0);
   lcd.print("Cool and good");
@@ -197,18 +223,18 @@ const char Liner[chamber][2][50] PROGMEM = {
   
   {"GND \x7f--- - POWER","VCC \x7f--- + 5VOLT"},
   {"DATA    ---\x7e SDA","CLOCK   ---\x7e SCL"},
-  {"MOCKUP TIME","FAKE SCREEN"},
-  {"TravolP - Inochi","MIDI|120MB|XG"},
+  {"\x04 MOCKUP  TIME \x02","\x05 FAKE  SCREEN \x06"},
+  {"TravolP - Inochi","MIDI|120MB|XG++"},
   {"\x7ePlay          \x7f"," Options        "},
   
   {"TravolP - Inochi","Cm| PerkedelEdit"},
   {"TravolP - Inochi","1:00 ------ 4:45"},
   {"USB: TUPAI(2TB)","26GB ------ 20TB"},
   {"Do Re Mi Fa","1 2 3 4"},
-  {"C      A   Cm","LyricLyric Ly"},
+  {"C      A   Cm","LyricLyric Lyrrx"},
   
   {"TravolP - Inochi","567 S.Art! H. \xd0\xb9"},
-  {"MOCKUP END","FUTURE DREAM"},
+  {"\x04 MOCKUP  END! \x02","\x05 FUTURE DREAM \x06"},
   {"by JOELwindows7","\x01 Perkedel Tech"},
   {"GNU GPL v3","FREE-OPEN-FULL"},
   {"linktr.ee/","joelwindows7"},
@@ -231,7 +257,7 @@ void loop() {
   Serial.print(F("O================O\n|"));
   for(uint8_t i = 0; i < strlen_P(Liner[choicer][0]);i++){
     //buffer= Liner[choicer][0][i];
-    buffer= (char*)pgm_read_word(&(Liner[choicer][0][i]));
+    buffer= (char)pgm_read_word(&(Liner[choicer][0][i]));
     //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][0][i])));
     Serial.print(buffer);
     buffString+=buffer;
@@ -240,7 +266,7 @@ void loop() {
   Serial.print(F("|\n|"));
   for(uint8_t i = 0; i < strlen_P(Liner[choicer][1]);i++){ //strlen_P(Liner[choicer][1]
     //buffer= Liner[choicer][1][i];
-    buffer= (char*)pgm_read_word(&(Liner[choicer][1][i]));
+    buffer= (char)pgm_read_word(&(Liner[choicer][1][i]));
     //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][1][i])));
     Serial.print(buffer);
     buffString+=buffer;
@@ -286,6 +312,6 @@ void loop() {
 
 //Arduino Uno has small memory of sketch!
 /* Trouble:
- * - Serialing, more than about 23 chamber = hang! display writing gone! crash!
+ * - Serialing, more than about 23 chamber = hang! display writing gone! crash! //Solved! new function is above
  * /
  */
