@@ -46,6 +46,7 @@
     https://forum.arduino.cc/index.php?topic=448155.0 The Software Wire I2C discussion; BitBang includes
 
     https://www.arduino.cc/en/tutorial/memory RAM is running out cause trouble!
+    https://www.arduino.cc/reference/en/language/variables/utilities/progmem/ PROGMEM things
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -156,6 +157,7 @@ byte ExclamBox[8] = {
 void setup() {
   // put your setup code here, to run once:
   //Serial.begin(56700); //No matter what, the Arduino crashes always.
+  //Serial.println(F("OK"));
   lcd.init();
   lcd.begin(16,2);
   lcd.createChar(1,PerkedelLogo);
@@ -168,11 +170,12 @@ void setup() {
   lcd.print("Perkedel Tech");
 }
 
-unsigned int choicer = 0;
-const int chamber = 21;
+uint8_t choicer = 0;
+const uint8_t chamber = 21;
 
-//String Liner[10][2] = {{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""}}
-String Liner[chamber][2] = {
+//String Liner[10][2] = {{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""}}; //Empty Templater already exist
+//char Liner[10][2][] PROGMEM = {{"",""}}; //we must branch this old version to move the different way where initializer is shorter, not too long!
+const String Liner[chamber][2] PROGMEM = {
   {"Cool and Good","\x01 Perkedel Tech"},
   {"Hello World","Halo Dunia"},
   {"Hatsune \xd0\xb9","Leekspinner"},
@@ -183,7 +186,7 @@ String Liner[chamber][2] = {
   {"1234567890ABCDEF","!@#$%^&*()abcdef"},
   {"SELF ESTEEM vINF","Rp100rb /\x5c 100rb"},
   {"OpenCX","VanElektronische"},
-  {"",""}, //empty is intended for templating. leave it for future project!
+  {"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",""}, //empty is intended for templating. leave it for future project! wait, he's already exist above!
   
   {"ASCII Table data","with NIHONGO"}, 
   {"Only support:","\xb6\xc7\xb6\xc5 & LATIN ..."},
@@ -213,19 +216,44 @@ String Liner[chamber][2] = {
   
   };
 
+//char buffer[2][16];
+//char buffer;
+
 void loop() {
   // put your main code here, to run repeatedly:
   lcd.clear();
-  lcd.setCursor(0,0); lcd.print(String(Liner[choicer][0]));
-  lcd.setCursor(0,1); lcd.print(String(Liner[choicer][1]));
+  //strcpy_P(buffer[0], (char*)pgm_read_word(&(Liner[choicer][0])));
+  //strcpy_P(buffer[1], (char*)pgm_read_word(&(Liner[choicer][1])));
+  /*for(uint8_t i = 0; i > strlen_P(Liner[choicer][0]);i++){
+    buffer= pgm_read_byte_near(Liner[choicer][0]+i);
+    lcd.setCursor(0,0); lcd.print(buffer);
+  }
+  for(uint8_t i = 0; i > strlen_P(Liner[choicer][1]);i++){
+    buffer= pgm_read_byte_near(Liner[choicer][1]+i);
+    lcd.setCursor(0,1); lcd.print(buffer);
+  }*/
+  /*for(uint8_t i = 0; i > 16;i++){
+    buffer= pgm_read_word_near(Liner[choicer][0]+i);
+    lcd.setCursor(0,0); lcd.print(buffer);
+  }
+  for(uint8_t i = 0; i > 16;i++){
+    buffer= pgm_read_word_near(Liner[choicer][1]+i);
+    lcd.setCursor(0,1); lcd.print(buffer);
+  }*/
+  //lcd.setCursor(0,0); lcd.print(buffer[0]);
+  //lcd.setCursor(0,1); lcd.print(buffer[1]);
+  
+  
+  lcd.setCursor(0,0); lcd.print(Liner[choicer][0]);
+  lcd.setCursor(0,1); lcd.print(Liner[choicer][1]);
 
-  //Serial.print(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n")); //Like I said, Arduino crash with serial on due to RAM low.
+  //Serial.print(F(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n"))); //Like I said, Arduino crash with serial on due to RAM low.
 
-  choicer++;
-  if(choicer>chamber-1)choicer=0;
+  //choicer++;
+  //if(choicer>chamber-1)choicer=0;
 
   //code from example lcd i2c pcf library
-  //choicer = (choicer + 1) % chamber;
+  choicer = (choicer + 1) % chamber;
   
   delay(3000);
 }
