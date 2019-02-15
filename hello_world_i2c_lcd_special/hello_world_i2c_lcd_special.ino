@@ -44,6 +44,8 @@
     https://forum.arduino.cc/index.php?topic=407904.0
 
     https://forum.arduino.cc/index.php?topic=448155.0 The Software Wire I2C discussion; BitBang includes
+
+    https://www.arduino.cc/en/tutorial/memory RAM is running out cause trouble!
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
