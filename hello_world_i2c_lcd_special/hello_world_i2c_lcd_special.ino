@@ -156,8 +156,8 @@ byte ExclamBox[8] = {
 
 void setup() {
   // put your setup code here, to run once:
-  //Serial.begin(56700); //No matter what, the Arduino crashes always.
-  //Serial.println(F("OK"));
+  Serial.begin(56700); //No matter what, the Arduino crashes always.
+  Serial.println(F("OK"));
   lcd.init();
   lcd.begin(16,2);
   lcd.createChar(1,PerkedelLogo);
@@ -175,63 +175,105 @@ const uint8_t chamber = 21;
 
 //String Liner[10][2] = {{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""}}; //Empty Templater already exist
 //char Liner[10][2][] PROGMEM = {{"",""}}; //we must branch this old version to move the different way where initializer is shorter, not too long!
-const String Liner[chamber][2] PROGMEM = {
-  {"Cool and Good","\x01 Perkedel Tech"},
-  {"Hello World","Halo Dunia"},
-  {"Hatsune \xd0\xb9","Leekspinner"},
-  {"I SQUARED C PC","C++ Arduino"},
-  {"\xa2\xb1\xd9\xc4\xde\xb3\xa8\xb0\xc9\xa3","SPECIAL \xb5\xc7\xb9\xa1"},
+//const String Liner[chamber][2] PROGMEM = {}; initalizer cannot be too long!
+  const char subLiner_01[2][16] PROGMEM = {"Cool and Good","\x01 Perkedel Tech"};
+  const char subLiner_02[2][16] PROGMEM = {"Hello World","Halo Dunia"};
+  const char subLiner_03[2][16] PROGMEM = {"Hatsune \xd0\xb9","Leekspinner"};
+  const char subLiner_04[2][16] PROGMEM = {"I SQUARED C PC","C++ Arduino"};
+  const char subLiner_05[2][16] PROGMEM = {"\xa2\xb1\xd9\xc4\xde\xb3\xa8\xb0\xc9\xa3","SPECIAL \xb5\xc7\xb9\xa1"};
   
-  {"\x7e DUPER_AWESOME\x7f","\xff{DIV BY ZERO} \xff"},
-  {"1234567890ABCDEF","!@#$%^&*()abcdef"},
-  {"SELF ESTEEM vINF","Rp100rb /\x5c 100rb"},
-  {"OpenCX","VanElektronische"},
-  {"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",""}, //empty is intended for templating. leave it for future project! wait, he's already exist above!
+  const char subLiner_06[2][16] PROGMEM = {"\x7e DUPER_AWESOME\x7f","\xff{DIV BY ZERO} \xff"};
+  const char subLiner_07[2][16] PROGMEM = {"1234567890ABCDEF","!@#$%^&*()abcdef"};
+  const char subLiner_08[2][16] PROGMEM = {"SELF ESTEEM vINF","Rp100rb /\x5c 100rb"};
+  const char subLiner_09[2][16] PROGMEM = {"OpenCX","VanElektronische"};
+  const char subLiner_10[2][16] PROGMEM = {"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",""}; //empty is intended for templating. leave it for future project! wait, he's already exist above!
   
-  {"ASCII Table data","with NIHONGO"}, 
-  {"Only support:","\xb6\xc7\xb6\xc5 & LATIN ..."},
-  {"Also has:","GREEK,SIGN,ETC."},
-  {"SUPER SIMPLE","4 PIN ONLY!!!"},
-  {"GND          SDA","VCC          SCL"},
+  const char subLiner_11[2][16] PROGMEM = {"ASCII Table data","with NIHONGO"};
+  const char subLiner_12[2][16] PROGMEM = {"Only support:","\xb6\xc7\xb6\xc5 & LATIN ..."};
+  const char subLiner_13[2][16] PROGMEM = {"Also has:","GREEK,SIGN,ETC."};
+  const char subLiner_14[2][16] PROGMEM = {"SUPER SIMPLE","4 PIN ONLY!!!"};
+  const char subLiner_15[2][16] PROGMEM = {"GND          SDA","VCC          SCL"};
   
-  {"GND \x7f--- - POWER","VCC \x7f--- + 5VOLT"},
-  {"DATA    ---\x7e SDA","CLOCK   ---\x7e SCL"},/*
-  {"MOCKUP TIME","FAKE SCREEN"},
-  {"TravolP - Inochi","Song Select"},
-  {"TravolP - Inochi","1:00 --------- 4:45"},
+  const char subLiner_16[2][16] PROGMEM = {"GND \x7f--- - POWER","VCC \x7f--- + 5VOLT"};
+  const char subLiner_17[2][16] PROGMEM = {"DATA    ---\x7e SDA","CLOCK   ---\x7e SCL"};/*
+  const char subLiner_18[2][16] PROGMEM = {"MOCKUP TIME","FAKE SCREEN"};
+  const char subLiner_19[2][16] PROGMEM = {"TravolP - Inochi","Song Select"};
+  const char subLiner_20[2][16] PROGMEM = {"TravolP - Inochi","1:00 --------- 4:45"};
   
-  {"TravolP - Inochi","Cm | Perkedel Edits"},
-  {"Lyric Lyric Lyric","  @           "},
-  {"USB: TUPAI SQ (2TB)","26GB ---------- 2TB"},
-  {"",""},
-  {"",""},
+  const char subLiner_21[2][16] PROGMEM = {"TravolP - Inochi","Cm | Perkedel Edits"};
+  const char subLiner_22[2][16] PROGMEM = {"Lyric Lyric Lyric","  @           "};
+  const char subLiner_23[2][16] PROGMEM = {"USB: TUPAI SQ (2TB)","26GB ---------- 2TB"};
+  const char subLiner_24[2][16] PROGMEM = {"",""};
+  const char subLiner_25[2][16] PROGMEM = {"",""};
   
-  {"TravolP - Inochi",""},
-  {"MOCKUP END","FUTURE DREAM"},*/
-  {"by JOELwindows7","\x01 Perkedel Tech"},
-  {"GNU GPL v3","FREE-OPEN-FULL"},
-  {"linktr.ee/","joelwindows7"},
+  const char subLiner_26[2][16] PROGMEM = {"TravolP - Inochi",""};
+  const char subLiner_27[2][16] PROGMEM = {"MOCKUP END","FUTURE DREAM"};*/
+  const char subLiner_28[2][16] PROGMEM = {"by JOELwindows7","\x01 Perkedel Tech"};
+  const char subLiner_29[2][16] PROGMEM = {"GNU GPL v3","FREE-OPEN-FULL"};
+  const char subLiner_30[2][16] PROGMEM = {"linktr.ee/","joelwindows7"};
   
-  {"\x03  Last Found  \x03","\x02  Game  Over  \x02"},
-  
-  };
+  const char subLiner_LAST[2][16] PROGMEM = {"\x03  Last Found  \x03","\x02  Game  Over  \x02"};
+
+const char* const Liner[chamber][2] PROGMEM ={
+  {subLiner_01[0],subLiner_01[1]},
+  {subLiner_02[0],subLiner_02[1]},
+  {subLiner_03[0],subLiner_03[1]},
+  {subLiner_04[0],subLiner_04[1]},
+  {subLiner_05[0],subLiner_05[1]},
+
+  {subLiner_06[0],subLiner_06[1]},
+  {subLiner_07[0],subLiner_07[1]},
+  {subLiner_08[0],subLiner_08[1]},
+  {subLiner_09[0],subLiner_09[1]},
+  {subLiner_10[0],subLiner_10[1]},
+
+  {subLiner_11[0],subLiner_11[1]},
+  {subLiner_12[0],subLiner_12[1]},
+  {subLiner_13[0],subLiner_13[1]},
+  {subLiner_14[0],subLiner_14[1]},
+  {subLiner_15[0],subLiner_15[1]},
+
+  {subLiner_16[0],subLiner_16[1]},
+  {subLiner_17[0],subLiner_17[1]},
+  /*{subLiner_18[0],subLiner_18[1]},
+  {subLiner_19[0],subLiner_19[1]},
+  {subLiner_20[0],subLiner_20[1]},
+
+  {subLiner_21[0],subLiner_21[1]},
+  {subLiner_22[0],subLiner_22[1]},
+  {subLiner_23[0],subLiner_23[1]},
+  {subLiner_24[0],subLiner_24[1]},
+  {subLiner_25[0],subLiner_25[1]},
+
+  {subLiner_26[0],subLiner_26[1]},
+  {subLiner_27[0],subLiner_27[1]},*/
+  {subLiner_28[0],subLiner_28[1]},
+  {subLiner_29[0],subLiner_29[1]},
+  {subLiner_30[0],subLiner_30[1]},
+
+  {subLiner_LAST[0],subLiner_LAST[1]},
+};
 
 //char buffer[2][16];
-//char buffer;
+char buffer;
 
 void loop() {
   // put your main code here, to run repeatedly:
   lcd.clear();
   //strcpy_P(buffer[0], (char*)pgm_read_word(&(Liner[choicer][0])));
   //strcpy_P(buffer[1], (char*)pgm_read_word(&(Liner[choicer][1])));
-  /*for(uint8_t i = 0; i > strlen_P(Liner[choicer][0]);i++){
-    buffer= pgm_read_byte_near(Liner[choicer][0]+i);
-    lcd.setCursor(0,0); lcd.print(buffer);
+  lcd.setCursor(0,0); 
+  for(uint8_t i = 0; i < strlen_P(Liner[choicer][0]);i++){
+    //buffer= Liner[choicer][0][i];
+    //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][0][i])));
+    lcd.print(buffer); Serial.println(buffer);
   }
-  for(uint8_t i = 0; i > strlen_P(Liner[choicer][1]);i++){
-    buffer= pgm_read_byte_near(Liner[choicer][1]+i);
-    lcd.setCursor(0,1); lcd.print(buffer);
-  }*/
+  lcd.setCursor(0,1);
+  for(uint8_t i = 0; i < strlen_P(Liner[choicer][1]);i++){
+    //buffer= Liner[choicer][1][i];
+    //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][1][i])));
+    lcd.print(buffer); Serial.println(buffer);
+  }
   /*for(uint8_t i = 0; i > 16;i++){
     buffer= pgm_read_word_near(Liner[choicer][0]+i);
     lcd.setCursor(0,0); lcd.print(buffer);
@@ -247,7 +289,11 @@ void loop() {
   lcd.setCursor(0,0); lcd.print(Liner[choicer][0]);
   lcd.setCursor(0,1); lcd.print(Liner[choicer][1]);
 
-  //Serial.print(F(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n"))); //Like I said, Arduino crash with serial on due to RAM low.
+  //Serial.print(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n")); //Like I said, Arduino crash with serial on due to RAM low.
+  //Serial.println(F(Liner[choicer][0]));
+  //Serial.println(F(Liner[choicer][1]));
+  //Serial.println(Liner[choicer][0]);
+  //Serial.println(Liner[choicer][1]);
 
   //choicer++;
   //if(choicer>chamber-1)choicer=0;
