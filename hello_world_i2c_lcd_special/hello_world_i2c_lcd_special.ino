@@ -171,12 +171,12 @@ void setup() {
 }
 
 uint8_t choicer = 0;
-const uint8_t chamber = 21;
+const uint8_t chamber = 31;
 
 //String Liner[10][2] = {{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""},{"",""}}; //Empty Templater already exist
 //char Liner[10][2][] PROGMEM = {{"",""}}; //we must branch this old version to move the different way where initializer is shorter, not too long!
 //const String Liner[chamber][2] PROGMEM = {}; initalizer cannot be too long!
-const char Liner[chamber][2][16] PROGMEM = {
+const char Liner[chamber][2][50] PROGMEM = {
   {"Cool and Good","\x01 Perkedel Tech"},
   {"Hello World","Halo Dunia"},
   {"Hatsune \xd0\xb9","Leekspinner"},
@@ -196,19 +196,19 @@ const char Liner[chamber][2][16] PROGMEM = {
   {"GND          SDA","VCC          SCL"},
   
   {"GND \x7f--- - POWER","VCC \x7f--- + 5VOLT"},
-  {"DATA    ---\x7e SDA","CLOCK   ---\x7e SCL"},/*
+  {"DATA    ---\x7e SDA","CLOCK   ---\x7e SCL"},
   {"MOCKUP TIME","FAKE SCREEN"},
-  {"TravolP - Inochi","Song Select"},
-  {"TravolP - Inochi","1:00 --------- 4:45"},
+  {"TravolP - Inochi","MIDI|120MB|XG"},
+  {"\x7ePlay          \x7f"," Options        "},
   
-  {"TravolP - Inochi","Cm | Perkedel Edits"},
-  {"Lyric Lyric Lyric","  @           "},
-  {"USB: TUPAI SQ (2TB)","26GB ---------- 2TB"},
-  {"",""},
-  {"",""},
+  {"TravolP - Inochi","Cm| PerkedelEdit"},
+  {"TravolP - Inochi","1:00 ------ 4:45"},
+  {"USB: TUPAI(2TB)","26GB ------ 20TB"},
+  {"Do Re Mi Fa","1 2 3 4"},
+  {"C      A   Cm","LyricLyric Ly"},
   
-  {"TravolP - Inochi",""},
-  {"MOCKUP END","FUTURE DREAM"},*/
+  {"TravolP - Inochi","567 S.Art! H. \xd0\xb9"},
+  {"MOCKUP END","FUTURE DREAM"},
   {"by JOELwindows7","\x01 Perkedel Tech"},
   {"GNU GPL v3","FREE-OPEN-FULL"},
   {"linktr.ee/","joelwindows7"},
@@ -217,30 +217,36 @@ const char Liner[chamber][2][16] PROGMEM = {
   
   };
 
-//char buffer[2][16];
+//char buffering[2][16];
 char buffer;
+String buffString;
 
 void loop() {
   // put your main code here, to run repeatedly:
   lcd.clear();
   //strcpy_P(buffer[0], (char*)pgm_read_word(&(Liner[choicer][0])));
   //strcpy_P(buffer[1], (char*)pgm_read_word(&(Liner[choicer][1])));
+  
   lcd.setCursor(0,0); 
+  Serial.print(F("O================O\n|"));
   for(uint8_t i = 0; i < strlen_P(Liner[choicer][0]);i++){
     //buffer= Liner[choicer][0][i];
     buffer= (char*)pgm_read_word(&(Liner[choicer][0][i]));
     //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][0][i])));
-    lcd.print(buffer); Serial.print(buffer);
-  }
+    Serial.print(buffer);
+    buffString+=buffer;
+  } lcd.print(buffString); buffString = "";
   lcd.setCursor(0,1);
-  Serial.println();
-  for(uint8_t i = 0; i < strlen_P(Liner[choicer][1]);i++){
+  Serial.print(F("|\n|"));
+  for(uint8_t i = 0; i < strlen_P(Liner[choicer][1]);i++){ //strlen_P(Liner[choicer][1]
     //buffer= Liner[choicer][1][i];
     buffer= (char*)pgm_read_word(&(Liner[choicer][1][i]));
     //strcpy_P(buffer, (char*)pgm_read_word(&(Liner[choicer][1][i])));
-    lcd.print(buffer); Serial.print(buffer);
-  }
-  Serial.println("\n");
+    Serial.print(buffer);
+    buffString+=buffer;
+  } lcd.print(buffString); buffString = "";
+  Serial.print(F("|\nO================O\n\n"));  //winner
+  
   /*for(uint8_t i = 0; i > 16;i++){
     buffer= pgm_read_word_near(Liner[choicer][0]+i);
     lcd.setCursor(0,0); lcd.print(buffer);
@@ -249,12 +255,19 @@ void loop() {
     buffer= pgm_read_word_near(Liner[choicer][1]+i);
     lcd.setCursor(0,1); lcd.print(buffer);
   }*/
+  
+  /*for(uint8_t i = 0; i < 2;i++){ //strlen_P(Liner[choicer][1]
+    strcpy_P(buffer[2], (char*)pgm_read_word(&(Liner[choicer][i]])));
+    lcd.print(buffer);Serial.print(buffer);
+    buffString+=buffer;
+  }*/ //trouble, you cannot set cursor lcd
+  
   //lcd.setCursor(0,0); lcd.print(buffer[0]);
   //lcd.setCursor(0,1); lcd.print(buffer[1]);
   
   
-  lcd.setCursor(0,0); lcd.print(Liner[choicer][0]);
-  lcd.setCursor(0,1); lcd.print(Liner[choicer][1]);
+  //lcd.setCursor(0,0); lcd.print(Liner[choicer][0]);
+  //lcd.setCursor(0,1); lcd.print(Liner[choicer][1]);
 
   //Serial.print(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n")); //Like I said, Arduino crash with serial on due to RAM low.
   //Serial.println(F(Liner[choicer][0]));
