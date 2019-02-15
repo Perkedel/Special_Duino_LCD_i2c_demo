@@ -1,6 +1,13 @@
 #include <Wire.h> 
+//#include <SoftWire.h>  
+//#include <AsyncDelay.h>
+//#include <SoftwareWire.h> //This case, this works
+//SoftwareWire Wire(A4,A5); //no need declare
+
 #include <LiquidCrystal_I2C.h> //original, multiple: original, New, SR.
 //#include <LiquidCrystal_PCF8574.h> //alternative mathertel
+//#include <LiquidCrystal_I2C_SoftWire.h> //JOELwindows7 edit for SoftWire
+//#include <LiquidCrystal_I2C_SoftwareWire.h> //JOELwindows7 edit for SoftwareWire //This case, this works
 
 /*  http://bit.ly/DuinoLCDi2cPerkedel
  *   GNU GPL v3
@@ -35,9 +42,13 @@
     other refferencing:
     https://github.com/mathertel/LiquidCrystal_PCF8574
     https://forum.arduino.cc/index.php?topic=407904.0
+
+    https://forum.arduino.cc/index.php?topic=448155.0 The Software Wire I2C discussion; BitBang includes
  */
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+//LiquidCrystal_I2C_SoftWire lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display 
+//LiquidCrystal_I2C_SoftwareWire lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display //This case, this works
 //LiquidCrystal_I2C lcd(0x27);
 //LiquidCrystal_PCF8574 lcd(0x27);
 
@@ -142,7 +153,7 @@ byte ExclamBox[8] = {
 
 void setup() {
   // put your setup code here, to run once:
-  //Serial.begin(300);
+  //Serial.begin(56700); //No matter what, the Arduino crashes always.
   lcd.init();
   lcd.begin(16,2);
   lcd.createChar(1,PerkedelLogo);
@@ -206,7 +217,7 @@ void loop() {
   lcd.setCursor(0,0); lcd.print(String(Liner[choicer][0]));
   lcd.setCursor(0,1); lcd.print(String(Liner[choicer][1]));
 
-  //Serial.print(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n"));
+  //Serial.print(String("O================O\n|") + String(Liner[choicer][0]) + String("|\n|") + String(Liner[choicer][1]) + String("O================O\n\n")); //Like I said, Arduino crash with serial on due to RAM low.
 
   choicer++;
   if(choicer>chamber-1)choicer=0;
